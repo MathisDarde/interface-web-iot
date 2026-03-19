@@ -1,4 +1,5 @@
 import { useEffect, useMemo, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { deleteJson, getJson, patchJson, postJson } from "../api";
 import { logout } from "../auth";
 import gamesJson from "../_assets/games-data.json";
@@ -54,6 +55,7 @@ function setStoredAdminGameName(gameName: string) {
 }
 
 export function AdminPage() {
+  const navigate = useNavigate();
   const games = gamesJson as unknown as Game[];
 
   const [gameName, setGameName] = useState<string>(() => {
@@ -99,7 +101,7 @@ export function AdminPage() {
   function unauthorizedToHome(message: string) {
     if (message === "UNAUTHORIZED") {
       logout();
-      window.location.href = "/";
+      navigate("/", { replace: true });
       return true;
     }
     return false;
@@ -243,7 +245,7 @@ export function AdminPage() {
           className="absolute top-3 right-5 text-blue-500 hover:underline transition-all font-Lato"
           onClick={() => {
             logout();
-            window.location.href = "/";
+            navigate("/", { replace: true });
           }}
         >
           Déconnexion

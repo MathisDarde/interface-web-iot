@@ -1,8 +1,11 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import type { Game } from "../../../types/types";
 import { postJson } from "../../api";
 
 export default function RegisterForm({ selectedGame }: { selectedGame: Game }) {
+  const navigate = useNavigate();
+
   const [isPasswordVisible, setIsPasswordVisible] = useState(false);
 
   const [pseudo, setPseudo] = useState("");
@@ -27,7 +30,7 @@ export default function RegisterForm({ selectedGame }: { selectedGame: Game }) {
       localStorage.setItem("auth_token", result.token);
       localStorage.setItem("auth_user", JSON.stringify(result.user));
 
-      window.location.href = "/admin";
+      navigate("/admin", { replace: true });
     } catch (e) {
       const message = e instanceof Error ? e.message : "REGISTER_FAILED";
       setError(message);
@@ -40,7 +43,7 @@ export default function RegisterForm({ selectedGame }: { selectedGame: Game }) {
     <div className="max-w-2xl mx-auto w-full p-8">
       <button
         type="button"
-        onClick={() => window.history.back()}
+        onClick={() => navigate(-1)}
         className="text-blue-500 hover:underline cursor-pointer transition-all font-Lato"
       >
         ← Retour
@@ -139,7 +142,7 @@ export default function RegisterForm({ selectedGame }: { selectedGame: Game }) {
         <p
           className="text-blue-500 hover:underline transition-all cursor-pointer text-center"
           onClick={() => {
-            window.location.href = `/login?game=${selectedGame.name}`;
+            navigate(`/login?game=${encodeURIComponent(selectedGame.name)}`);
           }}
         >
           J&apos;ai déjà un compte

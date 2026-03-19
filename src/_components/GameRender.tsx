@@ -1,4 +1,5 @@
 import type { Game } from "../../types/types";
+import { useNavigate } from "react-router-dom";
 import Button from "./Button";
 import styles from "./GameSelector.module.css";
 
@@ -8,6 +9,8 @@ interface Props {
 }
 
 export default function GameRender({ game, animationState = "idle" }: Props) {
+  const navigate = useNavigate();
+
   const imageAnimClass =
     animationState === "exit"
       ? styles.imageExit
@@ -84,7 +87,7 @@ export default function GameRender({ game, animationState = "idle" }: Props) {
           size="medium"
           className="flex items-center gap-4"
           onClick={() => {
-            window.location.href = `/login?game=${game.name}`;
+            navigate(`/login?game=${encodeURIComponent(game.name)}`);
           }}
         >
           <span>Jouer</span>

@@ -65,8 +65,7 @@ export function AdminPage() {
 
   const selectedGame = useMemo(() => {
     return (
-      games.find((g) => g.name.toLowerCase() === gameName.toLowerCase()) ??
-      null
+      games.find((g) => g.name.toLowerCase() === gameName.toLowerCase()) ?? null
     );
   }, [gameName, games]);
 
@@ -251,7 +250,9 @@ export function AdminPage() {
           Déconnexion
         </button>
 
-        <h1 className="font-Montserrat font-bold text-2xl">Liste des joueurs</h1>
+        <h1 className="font-Montserrat font-bold text-2xl">
+          Liste des joueurs
+        </h1>
 
         <div className="flex items-center gap-3">
           <label className="font-Lato">Jeu</label>
@@ -324,7 +325,9 @@ export function AdminPage() {
             <thead>
               <tr
                 className="text-left text-white"
-                style={{ backgroundColor: selectedGame?.mainColor ?? "#E01E28" }}
+                style={{
+                  backgroundColor: selectedGame?.mainColor ?? "#E01E28",
+                }}
               >
                 <th className="border-b px-4 py-2 font-Lato">Pseudo</th>
                 <th className="border-b px-4 py-2 font-Lato">Email</th>

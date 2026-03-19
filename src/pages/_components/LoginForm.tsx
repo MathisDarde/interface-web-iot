@@ -36,7 +36,7 @@ export default function LoginForm({ selectedGame }: { selectedGame: Game }) {
   }
 
   return (
-    <div className="max-w-2xl mx-auto w-full p-8">
+    <div className="mx-auto w-full max-w-2xl p-4 sm:p-6 lg:p-8">
       <button
         type="button"
         onClick={() => navigate(-1)}

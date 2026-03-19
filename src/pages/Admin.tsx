@@ -223,10 +223,10 @@ export function AdminPage() {
   }
 
   return (
-    <div className="min-h-screen max-w-6xl w-full mx-auto p-8">
+    <div className="min-h-dvh max-w-6xl w-full mx-auto p-4 sm:p-6 lg:p-8">
       {nfcStatus !== "idle" && (
         <div
-          className={`fixed top-4 left-1/2 -translate-x-1/2 z-100 px-6 py-3 rounded-full shadow-lg border text-white font-bold animate-bounce ${
+          className={`fixed top-4 left-1/2 -translate-x-1/2 z-[100] px-4 sm:px-6 py-2 sm:py-3 rounded-full shadow-lg border text-white font-bold animate-bounce ${
             nfcStatus === "scanning"
               ? "bg-blue-600"
               : nfcStatus === "success"
@@ -238,48 +238,52 @@ export function AdminPage() {
         </div>
       )}
 
-      <div className="flex items-center justify-between gap-4 mt-6">
-        <button
-          type="button"
-          className="absolute top-3 right-5 text-blue-500 hover:underline transition-all font-Lato"
-          onClick={() => {
-            logout();
-            navigate("/", { replace: true });
-          }}
-        >
-          Déconnexion
-        </button>
+      <div className="mt-6 flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+        <div className="flex flex-col gap-3 sm:gap-2">
+          <div className="flex items-start justify-between gap-3">
+            <h1 className="font-Montserrat font-bold text-2xl">
+              Liste des joueurs
+            </h1>
+            <button
+              type="button"
+              className="text-blue-500 hover:underline transition-all font-Lato"
+              onClick={() => {
+                logout();
+                navigate("/", { replace: true });
+              }}
+            >
+              Déconnexion
+            </button>
+          </div>
 
-        <h1 className="font-Montserrat font-bold text-2xl">
-          Liste des joueurs
-        </h1>
-
-        <div className="flex items-center gap-3">
-          <label className="font-Lato">Jeu</label>
-          <select
-            className="border px-3 py-2 rounded-lg font-Lato"
-            value={selectedGame?.name ?? gameName}
-            onChange={(e) => {
-              const next = e.target.value;
-              setGameName(next);
-              setStoredAdminGameName(next);
-            }}
-          >
-            {games.map((g) => (
-              <option key={g.id} value={g.name}>
-                {g.displayName}
-              </option>
-            ))}
-          </select>
+          <div className="flex flex-col gap-2 sm:flex-row sm:items-center sm:gap-3">
+            <label className="font-Lato">Jeu</label>
+            <select
+              className="border px-3 py-2 rounded-lg font-Lato w-full sm:w-auto"
+              value={selectedGame?.name ?? gameName}
+              onChange={(e) => {
+                const next = e.target.value;
+                setGameName(next);
+                setStoredAdminGameName(next);
+              }}
+            >
+              {games.map((g) => (
+                <option key={g.id} value={g.name}>
+                  {g.displayName}
+                </option>
+              ))}
+            </select>
+          </div>
         </div>
 
         <button
           type="button"
-          className="px-4 py-2 rounded-lg border font-Lato flex items-center gap-2 text-white hover:opacity-90 transition-opacity"
+          className="px-4 py-2 rounded-lg border font-Lato flex items-center justify-center gap-2 text-white hover:opacity-90 transition-opacity w-full sm:w-auto"
           style={{ backgroundColor: selectedGame?.mainColor ?? "#E01E28" }}
           onClick={openCreateModal}
         >
           <img
+            className="h-5 w-5"
             src={selectedGame?.iconImage ?? "/img/icons/pokeball.png"}
             alt="Game icon"
           />
@@ -321,7 +325,7 @@ export function AdminPage() {
         )}
 
         <div className="overflow-x-auto mt-3 rounded-md">
-          <table className="w-full border-collapse ">
+          <table className="w-full min-w-[720px] border-collapse">
             <thead>
               <tr
                 className="text-left text-white"
@@ -421,7 +425,7 @@ export function AdminPage() {
           </table>
         </div>
 
-        <div className="mt-4 flex items-center justify-between max-w-md mx-auto">
+        <div className="mt-4 flex flex-col items-center justify-between gap-3 sm:flex-row max-w-md mx-auto">
           <button
             type="button"
             className="px-4 py-2 rounded-lg border font-Lato disabled:opacity-60"
@@ -453,7 +457,7 @@ export function AdminPage() {
             onClick={closePlayerModal}
           />
 
-          <div className="relative bg-white rounded-lg w-full max-w-lg p-6">
+          <div className="relative bg-white rounded-lg w-full max-w-lg p-4 sm:p-6 max-h-[90dvh] overflow-y-auto">
             <div className="flex items-center justify-between">
               <h2 className="font-Montserrat font-bold text-xl">
                 {playerModalMode === "create"
@@ -574,7 +578,7 @@ export function AdminPage() {
             }}
           />
 
-          <div className="relative bg-white rounded-lg w-full max-w-lg p-6">
+          <div className="relative bg-white rounded-lg w-full max-w-lg p-4 sm:p-6 max-h-[90dvh] overflow-y-auto">
             <div className="flex items-center justify-between">
               <h2 className="font-Montserrat font-bold text-xl">
                 Supprimer le joueur

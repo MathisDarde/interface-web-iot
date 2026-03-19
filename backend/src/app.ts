@@ -8,20 +8,31 @@ import playersRoutes from "./routes/playersRoutes.js";
 
 const app = express();
 
+function normalizeOrigin(value: string): string {
+  return value.trim().replace(/\/+$/, "");
+}
+
 const allowedOrigins = env.FRONTEND_ORIGIN.split(",")
-  .map((origin) => origin.trim())
+  .map(normalizeOrigin)
   .filter(Boolean);
 
-app.use(
-  cors({
-    origin: allowedOrigins,
-    methods: ["GET", "POST", "PATCH", "DELETE", "OPTIONS"],
-    allowedHeaders: ["Content-Type", "Authorization"],
-  }),
-);
+const corsOptions: cors.CorsOptions = {
+  origin(origin, callback) {
+    // Requests from same-origin/non-browser clients may omit the Origin header.
+    if (!origin) return callback(null, true);
+
+    const normalized = normalizeOrigin(origin);
+    const ok = allowedOrigins.includes(normalized);
+    return callback(ok ? null : new Error("CORS_NOT_ALLOWED"), ok);
+  },
+  methods: ["GET", "POST", "PATCH", "DELETE", "OPTIONS"],
+  allowedHeaders: ["Content-Type", "Authorization"],
+};
+
+app.use(cors(corsOptions));
 
 // Explicit preflight handling (Express 5 doesn't accept "*" route patterns)
-app.options(/.*/, cors({ origin: allowedOrigins }));
+app.options(/.*/, cors(corsOptions));
 app.use(express.json());
 
 app.get("/health", (_req, res) => {

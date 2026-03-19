@@ -1,0 +1,97 @@
+@keyframes slideOutRight {
+  from {
+    opacity: 1;
+    transform: translateX(0);
+  }
+  to {
+    opacity: 0;
+    transform: translateX(120px);
+  }
+}
+
+@keyframes slideInLeft {
+  from {
+    opacity: 0;
+    transform: translateX(-120px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes fadeOutImage {
+  from {
+    opacity: 1;
+    filter: brightness(1);
+  }
+  to {
+    opacity: 0;
+    filter: brightness(0.6);
+  }
+}
+
+@keyframes fadeInImage {
+  from {
+    opacity: 0;
+    filter: brightness(0.6);
+  }
+  to {
+    opacity: 1;
+    filter: brightness(1);
+  }
+}
+
+@keyframes scaleOutLogo {
+  from {
+    opacity: 1;
+    transform: scale(1);
+  }
+  to {
+    opacity: 0;
+    transform: scale(0.9);
+  }
+}
+
+@keyframes scaleInLogo {
+  from {
+    opacity: 0;
+    transform: scale(0.9);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+.contentExit {
+  animation: slideOutRight 0.6s cubic-bezier(0.4, 0, 1, 1) forwards;
+}
+
+.contentEnter {
+  animation: slideInLeft 0.6s cubic-bezier(0, 0, 0.2, 1) forwards;
+}
+
+.imageExit {
+  animation: fadeOutImage 0.55s ease-out forwards;
+}
+
+.imageEnter {
+  animation: fadeInImage 0.55s ease-in forwards;
+}
+
+.logoExit {
+  animation: scaleOutLogo 0.45s ease-out forwards;
+}
+
+.logoEnter {
+  animation: scaleInLogo 0.45s ease-in forwards;
+}
+
+.numberExit {
+  animation: slideOutRight 0.45s cubic-bezier(0.4, 0, 1, 1) forwards;
+}
+
+.numberEnter {
+  animation: slideInLeft 0.45s cubic-bezier(0, 0, 0.2, 1) forwards;
+}

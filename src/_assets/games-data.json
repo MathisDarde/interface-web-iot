@@ -1,0 +1,47 @@
+[
+  {
+    "id": "1",
+    "name": "pokemon",
+    "mainColor": "#E01E28",
+    "displayName": "Pokémon",
+    "logoImage": "/img/gamelogo/pokemon.png",
+    "bgImage": "/img/banner/pokemon-banner.png",
+    "iconImage": "/img/icons/pokeball.png"
+  },
+  {
+    "id": "2",
+    "name": "yugioh",
+    "mainColor": "#EE2225",
+    "displayName": "Yu-Gi-Oh!",
+    "logoImage": "/img/gamelogo/yugioh.png",
+    "bgImage": "/img/banner/yugioh-banner.png",
+    "iconImage": "/img/icons/yugioh.png"
+  },
+  {
+    "id": "3",
+    "name": "lorcana",
+    "mainColor": "#5E57A5",
+    "displayName": "Lorcana",
+    "logoImage": "/img/gamelogo/lorcana.png",
+    "bgImage": "/img/banner/lorcana-banner.png",
+    "iconImage": "/img/icons/lorcana.png"
+  },
+  {
+    "id": "4",
+    "name": "magic",
+    "mainColor": "#CE3022",
+    "displayName": "Magic: The Gathering",
+    "logoImage": "/img/gamelogo/magic.png",
+    "bgImage": "/img/banner/magic-banner.png",
+    "iconImage": "/img/icons/magic.png"
+  },
+  {
+    "id": "5",
+    "name": "onepiece",
+    "mainColor": "#000000",
+    "displayName": "One Piece",
+    "logoImage": "/img/gamelogo/onepiece.png",
+    "bgImage": "/img/banner/onepiece-banner.png",
+    "iconImage": "/img/icons/onepiece.png"
+  }
+]

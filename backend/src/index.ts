@@ -8,16 +8,20 @@ import playersRoutes from "./routes/playersRoutes.js";
 
 const app = express();
 
+const allowedOrigins = env.FRONTEND_ORIGIN.split(",")
+  .map((origin) => origin.trim())
+  .filter(Boolean);
+
 app.use(
   cors({
-    origin: env.FRONTEND_ORIGIN,
+    origin: allowedOrigins,
     methods: ["GET", "POST", "PATCH", "DELETE", "OPTIONS"],
     allowedHeaders: ["Content-Type", "Authorization"],
   }),
 );
 
 // Explicit preflight handling (Express 5 doesn't accept "*" route patterns)
-app.options(/.*/, cors({ origin: env.FRONTEND_ORIGIN }));
+app.options(/.*/, cors({ origin: allowedOrigins }));
 app.use(express.json());
 
 app.get("/health", (_req, res) => {

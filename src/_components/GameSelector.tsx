@@ -95,7 +95,6 @@ export default function GameSelector() {
 
     return () => {
       window.removeEventListener("keydown", onKeyDown);
-      // Only clear the transition timeout on unmount.
       if (transitionTimeoutRef.current !== null) {
         window.clearTimeout(transitionTimeoutRef.current);
       }
@@ -104,88 +103,128 @@ export default function GameSelector() {
 
   if (games.length === 0) return null;
 
-  const activeGame = games[activeGameIndex];
-
   return (
-    <div className="relative h-dvh w-full overflow-hidden">
+    <div className="relative h-dvh w-full overflow-hidden bg-slate-50">
+      {/* RENDU DU JEU (ARRIÈRE-PLAN) */}
       {outgoingGameIndex !== null && (
-        <div className="absolute inset-0 pointer-events-none">
+        <div className="pointer-events-none absolute inset-x-0 top-0 bottom-20 sm:bottom-24 md:bottom-0">
           <GameRender game={games[outgoingGameIndex]} animationState="exit" />
         </div>
       )}
 
-      <div className="absolute inset-0">
+      <div className="absolute inset-x-0 top-0 bottom-20 sm:bottom-24 md:bottom-0">
         <GameRender
           game={games[activeGameIndex]}
           animationState={outgoingGameIndex !== null ? "enter" : "idle"}
         />
       </div>
 
-      <div className="absolute left-3 right-3 top-3 z-20 sm:left-4 sm:right-4 sm:top-4">
-        <div className="mx-auto w-full max-w-5xl rounded-xl border bg-white/90 p-2">
-          <div className="flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
-            <div className="flex items-center justify-between gap-2">
+      {/* DOCK DE NAVIGATION ÉPURÉ MODE CLAIR (EN BAS) */}
+      <div className="no-scrollbar absolute bottom-3 left-1/2 z-50 flex w-[calc(100vw-1rem)] max-w-[95vw] -translate-x-1/2 items-center justify-center gap-1.5 overflow-x-auto rounded-full border border-white/60 bg-white/70 p-1.5 shadow-2xl shadow-slate-300/50 backdrop-blur-xl sm:bottom-6 sm:w-max sm:gap-2 sm:p-2 md:bottom-8 md:gap-4 md:p-3">
+        {/* Flèche Précédent */}
+        <button
+          type="button"
+          className="hidden h-9 w-9 shrink-0 items-center justify-center rounded-full text-slate-400 transition-all hover:bg-slate-100 hover:text-slate-900 disabled:opacity-30 sm:h-10 sm:w-10 md:flex md:h-12 md:w-12 active:scale-95"
+          onClick={() => navigate("prev")}
+          disabled={isTransitioning}
+          aria-label="Jeu précédent"
+        >
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            fill="none"
+            viewBox="0 0 24 24"
+            strokeWidth={2.5}
+            stroke="currentColor"
+            className="h-4 w-4 sm:h-5 sm:w-5 md:h-6 md:w-6"
+          >
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              d="M15.75 19.5L8.25 12l7.5-7.5"
+            />
+          </svg>
+        </button>
+
+        {/* Liste des Jeux */}
+        <div className="flex items-center gap-1 sm:gap-2 md:gap-3">
+          {games.map((game, index) => {
+            const isActive = index === activeGameIndex;
+
+            return (
               <button
+                key={game.id}
                 type="button"
-                className="rounded-lg border px-3 py-2 font-Lato text-sm disabled:opacity-60"
-                onClick={() => navigate("prev")}
+                className={`group relative flex shrink-0 items-center justify-center overflow-hidden rounded-full transition-all duration-500 ease-in-out ${
+                  isActive
+                    ? "w-24 bg-white sm:w-32 md:w-48"
+                    : "w-9 hover:bg-slate-100 sm:w-10 md:w-12"
+                }`}
+                style={
+                  isActive
+                    ? {
+                        boxShadow: `0 4px 20px ${game.mainColor}25`,
+                        border: `1px solid ${game.mainColor}60`,
+                      }
+                    : {
+                        border: "1px solid transparent",
+                      }
+                }
+                onClick={() => goToIndex(index)}
                 disabled={isTransitioning}
-                aria-label="Jeu précédent"
+                aria-pressed={isActive}
               >
-                ←
-              </button>
-
-              <div className="min-w-0 text-center font-Lato text-sm sm:hidden">
-                {activeGame.displayName}
-              </div>
-
-              <button
-                type="button"
-                className="rounded-lg border px-3 py-2 font-Lato text-sm disabled:opacity-60"
-                onClick={() => navigate("next")}
-                disabled={isTransitioning}
-                aria-label="Jeu suivant"
-              >
-                →
-              </button>
-            </div>
-
-            <div className="flex flex-wrap items-center justify-center gap-2">
-              {games.map((game, index) => {
-                const isActive = index === activeGameIndex;
-                return (
-                  <button
-                    key={game.id}
-                    type="button"
-                    className={`flex items-center gap-2 rounded-lg border px-3 py-2 font-Lato text-sm transition-opacity disabled:opacity-60 ${
-                      isActive ? "text-white" : "hover:opacity-90"
-                    }`}
-                    style={
+                <div className="flex h-9 w-full items-center px-2 sm:h-10 md:h-12">
+                  <img
+                    src={game.iconImage}
+                    alt=""
+                    className={`h-5 w-5 shrink-0 object-contain transition-all duration-500 sm:h-6 sm:w-6 md:h-7 md:w-7 ${
                       isActive
-                        ? {
-                            backgroundColor: game.mainColor,
-                            borderColor: game.mainColor,
-                          }
-                        : {
-                            borderColor: game.mainColor,
-                          }
-                    }
-                    onClick={() => goToIndex(index)}
-                    disabled={isTransitioning}
-                    aria-pressed={isActive}
+                        ? "scale-100 opacity-100"
+                        : "scale-90 opacity-40 grayscale group-hover:scale-100 group-hover:opacity-100 group-hover:grayscale-0"
+                    }`}
+                  />
+
+                  {/* Nom du jeu (apparaît uniquement si actif) */}
+                  <div
+                    className={`flex-1 overflow-hidden transition-all duration-500 ${
+                      isActive
+                        ? "ml-1.5 opacity-100 sm:ml-2"
+                        : "ml-0 w-0 opacity-0"
+                    }`}
                   >
-                    <img
-                      src={game.iconImage}
-                      alt=""
-                      className="h-5 w-5 shrink-0 object-contain"
-                    />
-                    <span className="hidden sm:inline">{game.displayName}</span>
-                  </button>
-                );
-              })}
-            </div>
-          </div>
+                    <span className="block truncate font-Montserrat text-[10px] font-extrabold uppercase tracking-wider text-slate-800 sm:text-xs md:text-sm">
+                      {game.displayName}
+                    </span>
+                  </div>
+                </div>
+              </button>
+            );
+          })}
         </div>
+
+        {/* Flèche Suivant */}
+        <button
+          type="button"
+          className="hidden h-9 w-9 shrink-0 items-center justify-center rounded-full text-slate-400 transition-all hover:bg-slate-100 hover:text-slate-900 disabled:opacity-30 sm:h-10 sm:w-10 md:flex md:h-12 md:w-12 active:scale-95"
+          onClick={() => navigate("next")}
+          disabled={isTransitioning}
+          aria-label="Jeu suivant"
+        >
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            fill="none"
+            viewBox="0 0 24 24"
+            strokeWidth={2.5}
+            stroke="currentColor"
+            className="h-4 w-4 sm:h-5 sm:w-5 md:h-6 md:w-6"
+          >
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              d="M8.25 4.5l7.5 7.5-7.5 7.5"
+            />
+          </svg>
+        </button>
       </div>
     </div>
   );

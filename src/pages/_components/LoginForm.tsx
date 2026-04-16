@@ -36,26 +36,19 @@ export default function LoginForm({ selectedGame }: { selectedGame: Game }) {
   }
 
   return (
-    <div className="mx-auto w-full max-w-2xl p-4 sm:p-6 lg:p-8">
-      <button
-        type="button"
-        onClick={() => navigate(-1)}
-        className="text-blue-500 hover:underline cursor-pointer transition-all font-Lato"
-      >
-        ← Retour
-      </button>
-      <h1 className="text-center font-bold text-2xl font-Montserrat">
-        Connexion de l&apos;administrateur
-      </h1>
-
-      <form className="flex flex-col gap-4" onSubmit={onSubmit}>
-        <div className="flex flex-col space-y-2">
-          <label htmlFor="" className="font-Lato">
+    <div className="w-full max-w-xs sm:max-w-sm">
+      <p className="text-center mb-4 font-bold text-xl font-Lato">
+        Connexion de l'administrateur
+      </p>
+      <form className="flex w-full flex-col gap-5" onSubmit={onSubmit}>
+        {/* Champ Email Épuré */}
+        <div className="flex flex-col gap-1">
+          <label className="font-Lato text-xs font-bold uppercase tracking-wider text-slate-400">
             Email
           </label>
           <input
             type="email"
-            className="border px-4 py-2 rounded-lg"
+            className="w-full border-b border-slate-300 bg-transparent py-2 font-Lato text-sm text-slate-900 outline-none transition-colors focus:border-slate-900"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
             autoComplete="email"
@@ -63,70 +56,87 @@ export default function LoginForm({ selectedGame }: { selectedGame: Game }) {
           />
         </div>
 
-        <div className="flex flex-col space-y-2">
-          <label htmlFor="" className="font-Lato">
+        {/* Champ Mot de passe Épuré */}
+        <div className="flex flex-col gap-1">
+          <label className="font-Lato text-xs font-bold uppercase tracking-wider text-slate-400">
             Mot de passe
           </label>
           <div className="relative">
             <input
               type={isPasswordVisible ? "text" : "password"}
-              className="border pl-4 pr-14 py-2 rounded-lg w-full"
+              className="w-full border-b border-slate-300 bg-transparent py-2 pr-10 font-Lato text-sm text-slate-900 outline-none transition-colors focus:border-slate-900"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               autoComplete="current-password"
               required
             />
-            {isPasswordVisible ? (
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                viewBox="0 0 640 640"
-                onClick={() => setIsPasswordVisible(false)}
-                className="absolute size-5 top-3 right-5 cursor-pointer"
-              >
-                <path d="M320 96C239.2 96 174.5 132.8 127.4 176.6C80.6 220.1 49.3 272 34.4 307.7C31.1 315.6 31.1 324.4 34.4 332.3C49.3 368 80.6 420 127.4 463.4C174.5 507.1 239.2 544 320 544C400.8 544 465.5 507.2 512.6 463.4C559.4 419.9 590.7 368 605.6 332.3C608.9 324.4 608.9 315.6 605.6 307.7C590.7 272 559.4 220 512.6 176.6C465.5 132.9 400.8 96 320 96zM176 320C176 240.5 240.5 176 320 176C399.5 176 464 240.5 464 320C464 399.5 399.5 464 320 464C240.5 464 176 399.5 176 320zM320 256C320 291.3 291.3 320 256 320C244.5 320 233.7 317 224.3 311.6C223.3 322.5 224.2 333.7 227.2 344.8C240.9 396 293.6 426.4 344.8 412.7C396 399 426.4 346.3 412.7 295.1C400.5 249.4 357.2 220.3 311.6 224.3C316.9 233.6 320 244.4 320 256z" />
-              </svg>
-            ) : (
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                viewBox="0 0 640 640"
-                onClick={() => setIsPasswordVisible(true)}
-                className="absolute size-5 top-3 right-5 cursor-pointer"
-              >
-                <path d="M73 39.1C63.6 29.7 48.4 29.7 39.1 39.1C29.8 48.5 29.7 63.7 39 73.1L567 601.1C576.4 610.5 591.6 610.5 600.9 601.1C610.2 591.7 610.3 576.5 600.9 567.2L504.5 470.8C507.2 468.4 509.9 466 512.5 463.6C559.3 420.1 590.6 368.2 605.5 332.5C608.8 324.6 608.8 315.8 605.5 307.9C590.6 272.2 559.3 220.2 512.5 176.8C465.4 133.1 400.7 96.2 319.9 96.2C263.1 96.2 214.3 114.4 173.9 140.4L73 39.1zM236.5 202.7C260 185.9 288.9 176 320 176C399.5 176 464 240.5 464 320C464 351.1 454.1 379.9 437.3 403.5L402.6 368.8C415.3 347.4 419.6 321.1 412.7 295.1C399 243.9 346.3 213.5 295.1 227.2C286.5 229.5 278.4 232.9 271.1 237.2L236.4 202.5zM357.3 459.1C345.4 462.3 332.9 464 320 464C240.5 464 176 399.5 176 320C176 307.1 177.7 294.6 180.9 282.7L101.4 203.2C68.8 240 46.4 279 34.5 307.7C31.2 315.6 31.2 324.4 34.5 332.3C49.4 368 80.7 420 127.5 463.4C174.6 507.1 239.3 544 320.1 544C357.4 544 391.3 536.1 421.6 523.4L357.4 459.2z" />
-              </svg>
-            )}
-            <p className="text-blue-500 hover:underline transition-all text-right mt-1 cursor-pointer text-sm">
-              Mot de passe oublié ?
-            </p>
+            {/* Icône Oeil Discrète */}
+            <button
+              type="button"
+              onClick={() => setIsPasswordVisible(!isPasswordVisible)}
+              className="absolute right-0 top-1/2 -translate-y-1/2 text-slate-400 transition-colors hover:text-slate-800"
+            >
+              {isPasswordVisible ? (
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  className="h-4 w-4"
+                  fill="currentColor"
+                  viewBox="0 0 640 512"
+                >
+                  <path d="M320 400c-75.85 0-137.25-58.71-142.9-133.11L72.2 185.82c-13.79 17.3-26.48 35.59-36.72 55.59a32.35 32.35 0 0 0 0 29.19C89.71 376.41 197.07 448 320 448c26.91 0 52.87-4 77.89-10.46L346.39 397.39a144.13 144.13 0 0 1-26.39 2.61zm313.82 58.1l-110.55-85.44a331.25 331.25 0 0 0 81.25-102.07 32.35 32.35 0 0 0 0-29.19C550.29 135.59 442.93 64 320 64a308.15 308.15 0 0 0-147.32 37.7L45.46 3.37A16 16 0 0 0 23 6.18L3.37 31.45A16 16 0 0 0 6.18 53.9l588.36 454.73a16 16 0 0 0 22.46-2.81l19.64-25.27a16 16 0 0 0-2.82-22.45zm-183.72-142l-39.3-30.38A94.75 94.75 0 0 0 416 256a94.76 94.76 0 0 0-121.31-92.21A47.65 47.65 0 0 1 304 192a46.64 46.64 0 0 1-1.54 10l-73.61-56.89A142.31 142.31 0 0 1 320 112a143.92 143.92 0 0 1 144 144c0 21.63-5.29 41.79-13.9 60.11z" />
+                </svg>
+              ) : (
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  className="h-4 w-4"
+                  fill="currentColor"
+                  viewBox="0 0 576 512"
+                >
+                  <path d="M288 144a110.94 110.94 0 0 0-31.24 5 55.4 55.4 0 0 1 7.24 27 56 56 0 0 1-56 56 55.4 55.4 0 0 1-27-7.24A111.71 111.71 0 1 0 288 144zm284.52 97.4C518.29 135.59 410.93 64 288 64S57.68 135.64 3.48 241.41a32.35 32.35 0 0 0 0 29.19C57.71 376.41 165.07 448 288 448s230.32-71.64 284.52-177.41a32.35 32.35 0 0 0 0-29.19zM288 400c-98.65 0-189.09-55-237.93-144C98.91 167 189.34 112 288 112s189.09 55 237.93 144C477.1 345 386.66 400 288 400z" />
+                </svg>
+              )}
+            </button>
           </div>
+          <span className="mt-1 cursor-pointer self-end font-Lato text-[10px] sm:text-xs text-slate-400 transition-colors hover:text-slate-800">
+            Mot de passe oublié ?
+          </span>
         </div>
 
         {error && (
-          <p className="text-red-600 text-sm font-Lato">
+          <p className="text-center font-Lato text-xs text-red-500">
             {error === "INVALID_CREDENTIALS"
-              ? "Identifiants invalides"
-              : "Erreur: " + error}
+              ? "Identifiants invalides."
+              : `Erreur: ${error}`}
           </p>
         )}
 
         <button
           type="submit"
-          className="px-4 py-2 rounded-lg text-white font-Lato cursor-pointer disabled:opacity-60"
+          className="mt-4 w-full rounded-full px-4 py-3 font-Montserrat text-xs sm:text-sm font-bold tracking-wide text-white transition-opacity hover:opacity-90 disabled:opacity-60"
           style={{ backgroundColor: selectedGame.mainColor }}
           disabled={isSubmitting}
         >
-          {isSubmitting ? "Connexion..." : "Je me connecte"}
+          {isSubmitting ? "CONNEXION..." : "SE CONNECTER"}
         </button>
-
-        <p
-          className="text-blue-500 hover:underline transition-all cursor-pointer text-center"
-          onClick={() => {
-            navigate(`/register?game=${encodeURIComponent(selectedGame.name)}`);
-          }}
-        >
-          Ajouter un compte administrateur
-        </p>
       </form>
+
+      <div className="mt-8 flex flex-col items-center gap-2">
+        <p className="font-Lato text-xs sm:text-sm text-slate-500">
+          Pas encore de compte ?{" "}
+          <button
+            type="button"
+            onClick={() =>
+              navigate(
+                `/register?game=${encodeURIComponent(selectedGame.name)}`,
+              )
+            }
+            className="font-bold transition-colors hover:underline"
+            style={{ color: selectedGame.mainColor }}
+          >
+            S'inscrire
+          </button>
+        </p>
+      </div>
     </div>
   );
 }
